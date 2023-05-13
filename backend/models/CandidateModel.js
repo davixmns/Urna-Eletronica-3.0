@@ -1,6 +1,6 @@
 const database = require("../database/DB")
-const Sequelize = require("sequelize");
-const PartyModel = require("./PartyModel");
+const Sequelize = require("sequelize")
+const PartyModel = require("./PartyModel")
 
 const CandidateModel = database.define("candidate", {
     candidate_id: {
