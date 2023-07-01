@@ -14,7 +14,8 @@ const PartyModel = database.define("party", {
     },
     acronym: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     }
 }, {
     timestamps: false

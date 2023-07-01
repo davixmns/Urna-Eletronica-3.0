@@ -18,6 +18,11 @@ const CandidateModel = database.define("candidate", {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: true
+    },
+    vote_amount: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
     }
 }, {
     timestamps: false

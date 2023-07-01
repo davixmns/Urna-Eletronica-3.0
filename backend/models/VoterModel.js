@@ -19,7 +19,7 @@ const VoterModel = database.define('voter', {
         unique: true
     },
     vote_number: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false
     }
 })
