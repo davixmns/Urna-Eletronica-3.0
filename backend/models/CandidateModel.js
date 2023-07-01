@@ -19,6 +19,8 @@ const CandidateModel = database.define("candidate", {
         allowNull: false,
         unique: true
     }
+}, {
+    timestamps: false
 })
 
 CandidateModel.belongsTo(PartyModel, {

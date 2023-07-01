@@ -14,7 +14,7 @@ const VoterModel = database.define('voter', {
         allowNull: false
     },
     cpf: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true
     },

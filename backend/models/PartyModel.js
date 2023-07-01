@@ -16,6 +16,8 @@ const PartyModel = database.define("party", {
         type: Sequelize.STRING,
         allowNull: false
     }
+}, {
+    timestamps: false
 })
 
 module.exports = PartyModel
