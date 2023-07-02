@@ -25,7 +25,8 @@ const VoterModel = database.define('voter', {
 })
 
 VoterModel.belongsTo(CandidateModel, {
-    foreignKey: "candidate_id"
+    foreignKey: "candidate_id",
+    allowNull: false
 })
 
 module.exports = VoterModel

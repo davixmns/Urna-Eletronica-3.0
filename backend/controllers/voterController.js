@@ -16,11 +16,18 @@ module.exports = {
             return res.status(400).json({error: "Eleitor já cadastrado"})
         }
         const candidate = await CandidateModel.findOne({where: {number: vote_number}})
-        if(!candidate) {
+        if (!candidate) {
             return res.status(400).json({error: "Número de candidato inválido"})
         }
         const hashVote = await bcrypt.hash(vote_number, 12)
-        await VoterModel.create({name, cpf, vote_number: hashVote}).then(async () => {
+        await VoterModel.create(
+            {
+                name,
+                cpf,
+                vote_number: hashVote,
+                candidate_id: candidate.candidate_id
+            }
+        ).then(async () => {
             candidate.vote_amount += 1
             await candidate.save()
             return res.status(201).json({message: "Eleitor cadastrado com sucesso"})
