@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import telaImage from '../../assets/tela.jpg';
 import topoImage from '../../assets/topo.jpg';
 import faixaDirImage from '../../assets/faixaDir.jpg';
@@ -34,9 +34,9 @@ import confirmaImage from '../../assets/confirma.jpg';
 import brancoImage from '../../assets/branco.jpg';
 import corrigeImage from '../../assets/corrige.jpg';
 import abaixoTecImage from '../../assets/abaixoTec.jpg';
-import bateriaImage from '../../assets/bateria.jpg';
 import ptAbaixo9Image from '../../assets/ptabaixo9.jpg';
 import "./styles.css";
+import * as apiService from "../../services/apiService";
 
 export function Urna() {
     const [b0, setB0] = React.useState(n0Image);
@@ -53,100 +53,139 @@ export function Urna() {
     const [bBranco, setBBranco] = React.useState(brancoImage);
     const [bCorrige, setBCorrige] = React.useState(corrigeImage);
 
+    const [digito1, setDigito1] = React.useState(null);
+    const [digito2, setDigito2] = React.useState(null);
+
+    const [partidos, setPartidos] = React.useState([]);
+    const [candidatos, setCandidatos] = React.useState([]);
+
+    const [nomeDoCandidato, setNomeDoCandidato] = React.useState("");
+    const [partido, setPartido] = React.useState("");
+
+    useEffect(() => {
+        async function fetchData() {
+            const partidos = await apiService.getAllParties();
+            const candidatos = await apiService.getAllCandidates();
+            setPartidos(partidos);
+            setCandidatos(candidatos);
+        }
+        fetchData()
+            .then(() => {console.log("Dados carregados com sucesso!")})
+            .catch(() => {console.log("Erro ao carregar dados!")});
+    }, [])
+
+    function registrarNumero(numero){
+        if(digito1 == null){
+            setDigito1(numero);
+        }
+        else if(digito2 == null) {
+            setDigito2(numero);
+        }
+    }
+
+    useEffect(() => {
+        function identificarCandidato() {
+            if(digito1 && digito2){
+                console.log("Identificando candidato = " + digito1 + digito2)
+            }
+        }
+        identificarCandidato();
+    }, [digito1, digito2])
+
+
     function botao0Pressionado() {
         setTimeout(() => {
             setB0(n0Image);
         }, 200)
         setB0(n0Normal);
+        registrarNumero("0")
     }
-
     function botao1Pressionado() {
         setTimeout(() => {
             setB1(n1Image);
         }, 200)
         setB1(n1Normal);
+        registrarNumero("1")
     }
-
     function botao2Pressionado() {
         setTimeout(() => {
             setB2(n2Image);
         }, 200)
         setB2(n2Normal);
+        registrarNumero("2")
     }
-
     function botao3Pressionado() {
         setTimeout(() => {
             setB3(n3Image);
         }, 200)
         setB3(n3Normal);
+        registrarNumero('3')
     }
-
     function botao4Pressionado() {
         setTimeout(() => {
             setB4(n4Image);
         }, 200)
         setB4(n4Normal);
+        registrarNumero("4")
     }
-
     function botao5Pressionado() {
         setTimeout(() => {
             setB5(n5Image);
         }, 200)
         setB5(n5Normal);
+        registrarNumero("5")
     }
-
     function botao6Pressionado() {
         setTimeout(() => {
             setB6(n6Image);
         }, 200)
         setB6(n6Normal);
+        registrarNumero("6")
     }
-
     function botao7Pressionado() {
         setTimeout(() => {
             setB7(n7Image);
         }, 200)
         setB7(n7Normal);
+        registrarNumero("7")
     }
-
     function botao8Pressionado() {
         setTimeout(() => {
             setB8(n8Image);
         }, 200)
         setB8(n8Normal);
+        registrarNumero("8")
     }
-
     function botao9Pressionado() {
         setTimeout(() => {
             setB9(n9Image);
         }, 200)
         setB9(n9Normal);
+        registrarNumero("9")
     }
-
     function botaoConfirmaPressionado() {
         setTimeout(() => {
             setBConfirma(confirmaImage);
         }, 200)
         setBConfirma(confirmaPressionado);
     }
-
     function botaoBrancoPressionado() {
         setTimeout(() => {
             setBBranco(brancoImage);
         }, 200)
         setBBranco(brancoPressionado);
     }
-
     function botaoCorrigePressionado() {
         setTimeout(() => {
             setBCorrige(corrigeImage);
         }, 200)
         setBCorrige(corrigePressionado);
+        setDigito1(null);
+        setDigito2(null);
     }
 
     return (
-        <div id="conteudo">
-            <div className="barra-topo">&nbsp;</div>
+        <div>
             <img id="tela" alt="tela" src={telaImage} width="451" height="423" border="0"/>
             <img id="topo" alt="topo" src={topoImage} width="192" height="183" border="0"/>
             <img id="faixaDir" alt="faixaDir" src={faixaDirImage} width="38" height="357" border="0"/>
@@ -161,14 +200,38 @@ export function Urna() {
             <img id="n_7" alt="n_7" src={b7} width="51" height="41" border="0" onClick={botao7Pressionado}/>
             <img id="n_8" alt="n_8" src={b8} width="48" height="41" border="0" onClick={botao8Pressionado}/>
             <img id="n_9" alt="n_9" src={b9} width="48" height="41" border="0" onClick={botao9Pressionado}/>
-            <img id="branco" alt="branco" src={bBranco} width="63" height="41" border="0" onClick={botaoBrancoPressionado}/>
-            <img id="corrige" alt="corrige" src={bCorrige} width="63" height="41" border="0" onClick={botaoCorrigePressionado}/>
-            <img id="confirma" alt="confirma" src={bConfirma} width="66" height="49" border="0" onClick={botaoConfirmaPressionado}/>
+            <img id="branco" alt="branco" src={bBranco} width="63" height="41" border="0"
+                 onClick={botaoBrancoPressionado}/>
+            <img id="corrige" alt="corrige" src={bCorrige} width="63" height="41" border="0"
+                 onClick={botaoCorrigePressionado}/>
+            <img id="confirma" alt="confirma" src={bConfirma} width="66" height="49" border="0"
+                 onClick={botaoConfirmaPressionado}/>
             <img id="ladoDirTec" alt="ladoDirTec" src={ladoDirTecImage} width="26" height="152" border="0"/>
             <img id="ptabaixo7" alt="ptabaixo7" src={ptabaixo7Image} width="51" height="36" border="0"/>
             <img id="ptabaixo9" alt="ptabaixo9" src={ptAbaixo9Image} width="40" height="28" border="0"/>
             <img id="abaixoTec" alt="abaixoTec" src={abaixoTecImage} width="226" height="27" border="0"/>
-            <img src={bateriaImage} alt="bateria" id="bateria" width="..." height="..."/>
+
+            <div id={"tela-div"}>
+                <h1 className={"titulo"}>Presidente</h1>
+                <div className={"info"}>
+                    <div className={"dados"}>
+                        <h3 className={"info-titulo"}>Numero:</h3>
+                        <div className={"caixa-numero"}>
+                            <h1 className={"numero"}>{digito1}</h1>
+                        </div>
+                        <div className={"caixa-numero"}>
+                            <h1 className={"numero"}>{digito2}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div className={"dados"}>
+                    <h3 className={"info-titulo"}>Nome: {nomeDoCandidato}</h3>
+                </div>
+                <div className={"dados"}>
+                    <h3 className={"info-titulo"}>Partido:</h3>
+                </div>
+            </div>
         </div>
+
     );
 };
