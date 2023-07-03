@@ -42,13 +42,14 @@ export function Urna() {
     const [b0, setB0] = React.useState(n0Image);
     const [b1, setB1] = React.useState(n1Image);
     const [b2, setB2] = React.useState(n2Image);
-    const [b3, setB3] = React.useState(n3Image)
+    const [b3, setB3] = React.useState(n3Image);
     const [b4, setB4] = React.useState(n4Image);
     const [b5, setB5] = React.useState(n5Image);
     const [b6, setB6] = React.useState(n6Image);
     const [b7, setB7] = React.useState(n7Image);
     const [b8, setB8] = React.useState(n8Image);
     const [b9, setB9] = React.useState(n9Image);
+
     const [bConfirma, setBConfirma] = React.useState(confirmaImage);
     const [bBranco, setBBranco] = React.useState(brancoImage);
     const [bCorrige, setBCorrige] = React.useState(corrigeImage);
@@ -60,7 +61,13 @@ export function Urna() {
     const [candidatos, setCandidatos] = React.useState([]);
 
     const [nomeDoCandidato, setNomeDoCandidato] = React.useState("");
-    const [partido, setPartido] = React.useState("");
+    const [partidoDoCandidato, setPartidoDoCandidato] = React.useState("");
+
+    const [votoBranco, setVotoBranco] = React.useState(false);
+
+    const [votoNulo, setVotoNulo] = React.useState(false);
+
+    const [numeroFoiConfirmado, setNumeroFoiConfirmado] = React.useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -69,26 +76,41 @@ export function Urna() {
             setPartidos(partidos);
             setCandidatos(candidatos);
         }
+
         fetchData()
-            .then(() => {console.log("Dados carregados com sucesso!")})
-            .catch(() => {console.log("Erro ao carregar dados!")});
+            .then(() => {
+                console.log("Dados carregados com sucesso!")
+            })
+            .catch(() => {
+                console.log("Erro ao carregar dados!")
+            });
     }, [])
 
-    function registrarNumero(numero){
-        if(digito1 == null){
+    function registrarNumero(numero) {
+        if (digito1 == null) {
             setDigito1(numero);
-        }
-        else if(digito2 == null) {
+        } else if (digito2 == null) {
             setDigito2(numero);
         }
     }
 
     useEffect(() => {
         function identificarCandidato() {
-            if(digito1 && digito2){
-                console.log("Identificando candidato = " + digito1 + digito2)
+            if (digito1 && digito2) {
+                const numeroDigitado = digito1 + digito2;
+                for (const candidato of candidatos) {
+                    if (candidato.number == numeroDigitado) {
+                        const candidato = candidatos.find(candidato => candidato.number == numeroDigitado);
+                        setNomeDoCandidato(candidato.name);
+
+                        const partido = partidos.find(partido => partido.party_id == candidato.party_id);
+                        setPartidoDoCandidato(partido.acronym)
+                        setNumeroFoiConfirmado(true);
+                    }
+                }
             }
         }
+
         identificarCandidato();
     }, [digito1, digito2])
 
@@ -100,6 +122,7 @@ export function Urna() {
         setB0(n0Normal);
         registrarNumero("0")
     }
+
     function botao1Pressionado() {
         setTimeout(() => {
             setB1(n1Image);
@@ -107,6 +130,7 @@ export function Urna() {
         setB1(n1Normal);
         registrarNumero("1")
     }
+
     function botao2Pressionado() {
         setTimeout(() => {
             setB2(n2Image);
@@ -114,6 +138,7 @@ export function Urna() {
         setB2(n2Normal);
         registrarNumero("2")
     }
+
     function botao3Pressionado() {
         setTimeout(() => {
             setB3(n3Image);
@@ -121,6 +146,7 @@ export function Urna() {
         setB3(n3Normal);
         registrarNumero('3')
     }
+
     function botao4Pressionado() {
         setTimeout(() => {
             setB4(n4Image);
@@ -128,6 +154,7 @@ export function Urna() {
         setB4(n4Normal);
         registrarNumero("4")
     }
+
     function botao5Pressionado() {
         setTimeout(() => {
             setB5(n5Image);
@@ -135,6 +162,7 @@ export function Urna() {
         setB5(n5Normal);
         registrarNumero("5")
     }
+
     function botao6Pressionado() {
         setTimeout(() => {
             setB6(n6Image);
@@ -142,6 +170,7 @@ export function Urna() {
         setB6(n6Normal);
         registrarNumero("6")
     }
+
     function botao7Pressionado() {
         setTimeout(() => {
             setB7(n7Image);
@@ -149,6 +178,7 @@ export function Urna() {
         setB7(n7Normal);
         registrarNumero("7")
     }
+
     function botao8Pressionado() {
         setTimeout(() => {
             setB8(n8Image);
@@ -156,6 +186,7 @@ export function Urna() {
         setB8(n8Normal);
         registrarNumero("8")
     }
+
     function botao9Pressionado() {
         setTimeout(() => {
             setB9(n9Image);
@@ -163,18 +194,21 @@ export function Urna() {
         setB9(n9Normal);
         registrarNumero("9")
     }
+
     function botaoConfirmaPressionado() {
         setTimeout(() => {
             setBConfirma(confirmaImage);
         }, 200)
         setBConfirma(confirmaPressionado);
     }
+
     function botaoBrancoPressionado() {
         setTimeout(() => {
             setBBranco(brancoImage);
         }, 200)
         setBBranco(brancoPressionado);
     }
+
     function botaoCorrigePressionado() {
         setTimeout(() => {
             setBCorrige(corrigeImage);
@@ -182,6 +216,9 @@ export function Urna() {
         setBCorrige(corrigePressionado);
         setDigito1(null);
         setDigito2(null);
+        setNomeDoCandidato("");
+        setPartidoDoCandidato("");
+        setNumeroFoiConfirmado(false);
     }
 
     return (
@@ -215,21 +252,30 @@ export function Urna() {
                 <h1 className={"titulo"}>Presidente</h1>
                 <div className={"info"}>
                     <div className={"dados"}>
-                        <h3 className={"info-titulo"}>Numero:</h3>
-                        <div className={"caixa-numero"}>
-                            <h1 className={"numero"}>{digito1}</h1>
-                        </div>
-                        <div className={"caixa-numero"}>
-                            <h1 className={"numero"}>{digito2}</h1>
+                        {numeroFoiConfirmado ? (
+                            <h3 className={"info-titulo"}>Numero:</h3>
+                        ) : null}
+
+                        <div className={"caixas"}>
+                            <div className={"caixa-numero"}>
+                                <h1 className={"numero"}>{digito1}</h1>
+                            </div>
+                            <div className={"caixa-numero"}>
+                                <h1 className={"numero"}>{digito2}</h1>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className={"dados"}>
-                    <h3 className={"info-titulo"}>Nome: {nomeDoCandidato}</h3>
-                </div>
-                <div className={"dados"}>
-                    <h3 className={"info-titulo"}>Partido:</h3>
-                </div>
+                {numeroFoiConfirmado ? (
+                    <div>
+                        <div className={"dados"}>
+                            <h3 className={"info-titulo"}>Nome: {nomeDoCandidato}</h3>
+                        </div>
+                        <div className={"dados"}>
+                            <h3 className={"info-titulo"}>Partido: {partidoDoCandidato}</h3>
+                        </div>
+                    </div>
+                ) : null}
             </div>
         </div>
 
