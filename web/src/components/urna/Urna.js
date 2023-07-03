@@ -96,6 +96,7 @@ export function Urna() {
 
     useEffect(() => {
         function identificarCandidato() {
+            let flag = true;
             if (digito1 && digito2) {
                 const numeroDigitado = digito1 + digito2;
                 for (const candidato of candidatos) {
@@ -106,7 +107,11 @@ export function Urna() {
                         const partido = partidos.find(partido => partido.party_id == candidato.party_id);
                         setPartidoDoCandidato(partido.acronym)
                         setNumeroFoiConfirmado(true);
+                        flag = false;
                     }
+                }
+                if (flag) {
+                    setVotoNulo(true);
                 }
             }
         }
@@ -207,6 +212,7 @@ export function Urna() {
             setBBranco(brancoImage);
         }, 200)
         setBBranco(brancoPressionado);
+        setVotoBranco(true)
     }
 
     function botaoCorrigePressionado() {
@@ -219,6 +225,8 @@ export function Urna() {
         setNomeDoCandidato("");
         setPartidoDoCandidato("");
         setNumeroFoiConfirmado(false);
+        setVotoNulo(false);
+        setVotoBranco(false);
     }
 
     return (
@@ -248,34 +256,50 @@ export function Urna() {
             <img id="ptabaixo9" alt="ptabaixo9" src={ptAbaixo9Image} width="40" height="28" border="0"/>
             <img id="abaixoTec" alt="abaixoTec" src={abaixoTecImage} width="226" height="27" border="0"/>
 
+
             <div id={"tela-div"}>
                 <h1 className={"titulo"}>Presidente</h1>
-                <div className={"info"}>
-                    <div className={"dados"}>
-                        {numeroFoiConfirmado ? (
-                            <h3 className={"info-titulo"}>Numero:</h3>
-                        ) : null}
 
-                        <div className={"caixas"}>
-                            <div className={"caixa-numero"}>
-                                <h1 className={"numero"}>{digito1}</h1>
-                            </div>
-                            <div className={"caixa-numero"}>
-                                <h1 className={"numero"}>{digito2}</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {numeroFoiConfirmado ? (
+                {!votoBranco ? (
                     <div>
-                        <div className={"dados"}>
-                            <h3 className={"info-titulo"}>Nome: {nomeDoCandidato}</h3>
+                        <div className={"info"}>
+                            <div className={"dados"}>
+                                {numeroFoiConfirmado ? (
+                                    <h3 className={"info-titulo"}>Numero:</h3>
+                                ) : (votoNulo ? (
+                                    <h3 className={"info-titulo"}>Numero:</h3>
+                                ) : null)}
+
+                                <div className={"caixas"}>
+                                    <div className={"caixa-numero"}>
+                                        <h1 className={"numero"}>{digito1}</h1>
+                                    </div>
+                                    <div className={"caixa-numero"}>
+                                        <h1 className={"numero"}>{digito2}</h1>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className={"dados"}>
-                            <h3 className={"info-titulo"}>Partido: {partidoDoCandidato}</h3>
-                        </div>
+                        {numeroFoiConfirmado ? (
+                            <div>
+                                <div className={"dados"}>
+                                    <h3 className={"info-titulo"}>Nome: {nomeDoCandidato}</h3>
+                                </div>
+                                <div className={"dados"}>
+                                    <h3 className={"info-titulo"}>Partido: {partidoDoCandidato}</h3>
+                                </div>
+                            </div>
+                        ) : (votoNulo ? (
+                            <div>
+                                <h1 className={"voto-nulo"}>VOTO NULO</h1>
+                                <h3 className={"numero-errado"}>NUMERO ERRADO</h3>
+                            </div>
+                        ) : null)}
                     </div>
-                ) : null}
+                ) : (
+                    <h1 className={"voto-branco"}>VOTO EM BRANCO</h1>
+                )}
+
             </div>
         </div>
 

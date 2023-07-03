@@ -41,6 +41,31 @@
     gap: 0.2rem;
 }
 
+.voto-nulo {
+    font-size: 3rem;
+    position: absolute;
+    left: 8rem;
+    margin-top: 2rem;
+    font-weight: 300;
+    font-family: "Open Sans", serif;
+}
+
+.voto-branco {
+    font-size: 3rem;
+    position: absolute;
+    left: 3rem;
+    margin-top: 3rem;
+    font-weight: 300;
+    font-family: "Open Sans", serif;
+}
+
+.numero-errado {
+    position: absolute;
+    font-weight: 400;
+    margin-left: 3rem;
+    top: 7.5rem;
+}
+
 .caixa-numero {
     width: 2.2rem;
     height: 2.5rem;
