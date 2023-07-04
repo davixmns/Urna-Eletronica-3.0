@@ -62,6 +62,7 @@ export function Urna() {
 
     const [nomeDoCandidato, setNomeDoCandidato] = React.useState("");
     const [partidoDoCandidato, setPartidoDoCandidato] = React.useState("");
+    const [fotoDoCandidato, setFotoDoCandidato] = React.useState(null);
 
     const [votoBranco, setVotoBranco] = React.useState(false);
 
@@ -106,6 +107,8 @@ export function Urna() {
 
                         const partido = partidos.find(partido => partido.party_id == candidato.party_id);
                         setPartidoDoCandidato(partido.acronym)
+
+                        setFotoDoCandidato(candidato.image);
                         setNumeroFoiConfirmado(true);
                         flag = false;
                     }
@@ -227,6 +230,7 @@ export function Urna() {
         setNumeroFoiConfirmado(false);
         setVotoNulo(false);
         setVotoBranco(false);
+        setFotoDoCandidato(null);
     }
 
     return (
@@ -259,49 +263,49 @@ export function Urna() {
 
             <div id={"tela-div"}>
                 <h1 className={"titulo"}>Presidente</h1>
-
                 {!votoBranco ? (
                     <div>
-                        <div className={"info"}>
-                            <div className={"dados"}>
-                                {numeroFoiConfirmado ? (
-                                    <h3 className={"info-titulo"}>Numero:</h3>
-                                ) : (votoNulo ? (
-                                    <h3 className={"info-titulo"}>Numero:</h3>
-                                ) : null)}
+                        <div className={"tela-dados"}>
+                            <div className={"textos"}>
+                                <div style={{gap: "2rem"}}>
+                                    <div className={"caixas"}>
+                                        <div>
+                                            <h3 className={"info-titulo"}>Numero:</h3>
+                                        </div>
+                                        <div className={"caixa-numero"}>
+                                            <h1 className={"numero"}>{digito1}</h1>
+                                        </div>
+                                        <div className={"caixa-numero"}>
+                                            <h1 className={"numero"}>{digito2}</h1>
+                                        </div>
+                                    </div>
 
-                                <div className={"caixas"}>
-                                    <div className={"caixa-numero"}>
-                                        <h1 className={"numero"}>{digito1}</h1>
+                                    <div>
+                                        <div>
+                                            <h3 className={"info-titulo"}>Nome: {nomeDoCandidato}</h3>
+                                        </div>
+                                        <div style={{marginTop: "3rem"}}>
+                                            <h3 className={"info-titulo"}>Partido: {partidoDoCandidato}</h3>
+                                        </div>
                                     </div>
-                                    <div className={"caixa-numero"}>
-                                        <h1 className={"numero"}>{digito2}</h1>
-                                    </div>
+
                                 </div>
                             </div>
+                            <div className="foto">
+                                <img src={fotoDoCandidato} alt={null} className="foto" />
+                            </div>
+
+
                         </div>
-                        {numeroFoiConfirmado ? (
-                            <div>
-                                <div className={"dados"}>
-                                    <h3 className={"info-titulo"}>Nome: {nomeDoCandidato}</h3>
-                                </div>
-                                <div className={"dados"}>
-                                    <h3 className={"info-titulo"}>Partido: {partidoDoCandidato}</h3>
-                                </div>
-                            </div>
-                        ) : (votoNulo ? (
-                            <div>
-                                <h1 className={"voto-nulo"}>VOTO NULO</h1>
-                                <h3 className={"numero-errado"}>NUMERO ERRADO</h3>
-                            </div>
-                        ) : null)}
                     </div>
                 ) : (
-                    <h1 className={"voto-branco"}>VOTO EM BRANCO</h1>
+                    <h1 className={"voto-branco"}>VOTO EM BRANCO
+                    </h1>
                 )}
 
             </div>
         </div>
 
-    );
+    )
+        ;
 };

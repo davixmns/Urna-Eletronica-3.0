@@ -29,7 +29,8 @@ module.exports = {
                     await CandidateModel.create({
                         name: candidate.name,
                         number: candidate.number,
-                        party_id: candidate.party_id
+                        party_id: candidate.party_id,
+                        image: candidate.image
                     });
                 }
             } catch (error) {

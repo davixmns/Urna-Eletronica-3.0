@@ -23,6 +23,10 @@ const CandidateModel = database.define("candidate", {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0
+    },
+    image: {
+        type: Sequelize.STRING,
+        allowNull: true
     }
 }, {
     timestamps: false
