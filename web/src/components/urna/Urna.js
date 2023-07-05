@@ -294,13 +294,10 @@ export function Urna() {
                             <div className="foto">
                                 <img src={fotoDoCandidato} alt={null} className="foto" />
                             </div>
-
-
                         </div>
                     </div>
                 ) : (
-                    <h1 className={"voto-branco"}>VOTO EM BRANCO
-                    </h1>
+                    <h1 className={"voto-branco"}>VOTO EM BRANCO</h1>
                 )}
 
             </div>

@@ -10,6 +10,9 @@ module.exports = {
 
     async createVoter(req, res) {
         let {name, cpf, vote_number} = req.body
+        if(!name || !cpf || !vote_number){
+            return res.status(400).json({error: "Dados obrigatórios não foram preenchidos"})
+        }
         vote_number = vote_number.toString()
         const voter = await VoterModel.findOne({where: {cpf: cpf}})
         if (voter) {

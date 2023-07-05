@@ -20,3 +20,12 @@ export function getAllCandidates() {
         })
 }
 
+export function createVoter() {
+    return axios.post(`${BASE_URL}/voter`)
+        .then(res => res.data)
+        .catch(err => {
+            console.log(err)
+            return null
+        })
+}
+
