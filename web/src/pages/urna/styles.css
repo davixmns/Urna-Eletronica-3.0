@@ -1,0 +1,291 @@
+.titulo {
+    font-family: "Open Sans", serif;
+    font-weight: 10;
+    margin-right: 12rem;
+    font-size: 30px;
+}
+
+.tela-dados {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5rem;
+
+}
+
+.info-titulo{
+    font-weight: 400;
+    text-align: start;
+}
+
+.textos {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 0.3rem;
+    margin-left: 3rem;
+}
+
+.caixas {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2rem;
+}
+
+.voto-nulo {
+    font-size: 3rem;
+    position: absolute;
+    left: 8rem;
+    margin-top: 2rem;
+    font-weight: 300;
+    font-family: "Open Sans", serif;
+}
+
+.voto-branco {
+    font-size: 3rem;
+    position: absolute;
+    left: 3rem;
+    margin-top: 3rem;
+    font-weight: 300;
+    font-family: "Open Sans", serif;
+}
+
+.numero-errado {
+    position: absolute;
+    font-weight: 400;
+    margin-left: 3rem;
+    top: 7.5rem;
+}
+
+.caixa-numero {
+    width: 2.2rem;
+    height: 2.5rem;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    border: 1px solid #000;
+}
+
+.numero {
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+.foto {
+    width: 8rem;
+    height: 12rem;
+    position: absolute;
+    margin-left: 9rem;
+}
+
+#tela-div {
+    position: absolute;
+    left: 49px;
+    top: 312px;
+    width: 548px;
+    height: 320px;
+    background-color: white;
+    opacity: 1;
+}
+
+#tela {
+    position: absolute;
+    left: 0px;
+    top: 105px;
+    width: 642px;
+    height: 603px;
+}
+
+#topo {
+    position: absolute;
+    left: 642px;
+    top: 102px;
+    width: 274px;
+    height: 261px;
+}
+
+#faixaDir {
+    position: absolute;
+    left: 916px;
+    top: 137px;
+    width: 55px;
+    height: 512px;
+}
+
+#ladoEsqTec {
+    position: absolute;
+    left: 642px;
+    top: 363px;
+    width: 27px;
+    height: 227px;
+}
+
+#habilitaNumeros {
+    display: none;
+}
+
+#habilitaCorrige {
+    display: none;
+}
+
+#n_1 {
+    position: absolute;
+    left: 669px;
+    top: 363px;
+    width: 73px;
+    height: 58px;
+    cursor: pointer;
+}
+
+#n_2 {
+    position: absolute;
+    left: 742px;
+    top: 363px;
+    width: 68px;
+    height: 58px;
+    cursor: pointer;
+}
+
+#n_3 {
+    position: absolute;
+    left: 810px;
+    top: 363px;
+    width: 69px;
+    height: 58px;
+    cursor: pointer;
+}
+
+#ladoDirTec {
+    position: absolute;
+    left: 879px;
+    top: 363px;
+    width: 37px;
+    height: 216px;
+}
+
+#n_4 {
+    position: absolute;
+    left: 669px;
+    top: 421px;
+    width: 73px;
+    height: 60px;
+    cursor: pointer;
+}
+
+#n_5 {
+    position: absolute;
+    left: 742px;
+    top: 421px;
+    width: 68px;
+    height: 60px;
+    cursor: pointer;
+}
+
+#n_6 {
+    position: absolute;
+    left: 810px;
+    top: 421px;
+    width: 69px;
+    height: 60px;
+    cursor: pointer;
+}
+
+#n_7 {
+    position: absolute;
+    left: 669px;
+    top: 481px;
+    width: 73px;
+    height: 58px;
+    cursor: pointer;
+}
+
+#n_8 {
+    position: absolute;
+    left: 742px;
+    top: 481px;
+    width: 68px;
+    height: 58px;
+    cursor: pointer;
+}
+
+#n_9 {
+    position: absolute;
+    left: 810px;
+    top: 481px;
+    width: 69px;
+    height: 58px;
+    cursor: pointer;
+}
+
+#n_0 {
+    position: absolute;
+    left: 742px;
+    top: 539px;
+    width: 80px;
+    height: 51px;
+    cursor: pointer;
+}
+
+#confirma {
+    position: absolute;
+    left: 822px;
+    top: 579px;
+    width: 94px;
+    height: 70px;
+    cursor: pointer;
+}
+
+#branco {
+    position: absolute;
+    left: 642px;
+    top: 590px;
+    width: 90px;
+    height: 59px;
+    cursor: pointer;
+}
+
+#corrige {
+    position: absolute;
+    left: 732px;
+    top: 590px;
+    width: 90px;
+    height: 59px;
+    cursor: pointer;
+}
+
+#ptabaixo7 {
+    position: absolute;
+    left: 669px;
+    top: 539px;
+    width: 73px;
+    height: 51px;
+}
+
+#ptabaixo9 {
+    position: absolute;
+    left: 822px;
+    top: 539px;
+    width: 57px;
+    height: 40px;
+}
+
+#abaixoTec {
+    position: absolute;
+    left: 642px;
+    top: 649px;
+    width: 324px;
+    height: 40px;
+}
+
+#bateria {
+    position: absolute;
+    left: 554px;
+    top: 314px;
+    width: 40px;
+    height: 20px;
+}
+
+
+
+
+
