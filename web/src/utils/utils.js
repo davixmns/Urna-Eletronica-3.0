@@ -1,4 +1,7 @@
 function verifyLoginForm(nome, cpf){
+    if(!nome && !cpf){
+        return ""
+    }
     if(!nome || !cpf){
         return "Preencha todos os campos"
     }

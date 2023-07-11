@@ -13,7 +13,8 @@ export function Login() {
     const [erro, setErro] = useState("");
 
     useEffect(() => {
-        console.log(erro)
+        const resposta = verifyLoginForm(nomeDoEleitor, cpfDoEleitor);
+        setErro(resposta);
     }, [nomeDoEleitor, cpfDoEleitor]);
 
     function handleOnChangeNome(event) {
@@ -26,10 +27,8 @@ export function Login() {
 
     function acessarUrna() {
         const resposta = verifyLoginForm(nomeDoEleitor, cpfDoEleitor);
-        if (resposta == true) {
+        if (resposta === true) {
             navigate("/urna");
-        } else {
-            setErro(resposta);
         }
     }
 
@@ -49,8 +48,8 @@ export function Login() {
                         value={cpfDoEleitor}
                         onChange={handleOnChangeCPF}
                     />
+                    {erro && <span id="erro">{erro}</span>}
                     <MyButton value={"Entrar"} onClick={acessarUrna} />
-                    {erro && <p className="erro">{erro}</p>}
                 </div>
             </div>
         </div>
