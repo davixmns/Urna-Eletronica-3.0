@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 90vh;
 }
 
 #login-content {
@@ -11,7 +12,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #61dafb;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+    gap: 1rem;
+    background-color: #fff;
+    height: 80%;
 }
 
 #login-form {
@@ -23,10 +28,10 @@
     background-color: #fff;
     border-radius: 0.5rem;
     gap: 1rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 #login-title {
+    font-family: 'Roboto', sans-serif;
     font-size: 2rem;
     font-weight: 300;
     color: #000;

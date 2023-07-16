@@ -36,7 +36,7 @@ export function Login() {
         <div id={"login-container"}>
             <div id={"login-content"}>
                 <img src={brasao} alt={"brasao"} />
-                <h1 id={"login-title"}>Simulador de urna</h1>
+                <h1 id={"login-title"}>Simulador de urna eletrônica</h1>
                 <div id={"login-form"}>
                     <MyTextInput
                         placeholder={"Digite seu NOME"}
@@ -48,8 +48,10 @@ export function Login() {
                         value={cpfDoEleitor}
                         onChange={handleOnChangeCPF}
                     />
-                    {erro && <span id="erro">{erro}</span>}
                     <MyButton value={"Entrar"} onClick={acessarUrna} />
+                    {erro && (
+                        <span id="erro">{erro}</span>
+                    )}
                 </div>
             </div>
         </div>
