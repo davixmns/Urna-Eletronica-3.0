@@ -6,10 +6,10 @@
     font-size: 16px;
     height: 40px;
     padding: 0 10px;
-    width: 100%;
+    width: 18.5rem;
 }
 
 #my-input:focus {
-    border-color: darkolivegreen;
+    border-color: blue;
     outline: none;
 }

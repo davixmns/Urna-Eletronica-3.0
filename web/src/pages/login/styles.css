@@ -3,7 +3,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 90vh;
+    height: 100vh;
+    background-color: darkolivegreen;
 }
 
 #login-content {
@@ -13,7 +14,7 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     gap: 1rem;
     background-color: #fff;
     height: 80%;
@@ -28,6 +29,7 @@
     background-color: #fff;
     border-radius: 0.5rem;
     gap: 1rem;
+    width: 30rem;
 }
 
 #login-title {
@@ -41,4 +43,6 @@
     color: #f00;
     font-size: 1rem;
     font-weight: 300;
+    position: absolute;
+    margin-top: 3rem;
 }

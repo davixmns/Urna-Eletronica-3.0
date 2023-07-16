@@ -22,7 +22,14 @@ export function Login() {
     }
 
     function handleOnChangeCPF(event) {
-        setCpfDoEleitor(event.target.value);
+        const rawValue = event.target.value.replace(/\D/g, "");
+        const formattedValue = formatCPF(rawValue);
+        setCpfDoEleitor(formattedValue);
+    }
+
+    function formatCPF(cpf) {
+        if (!cpf) return cpf;
+        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
     }
 
     function acessarUrna() {
@@ -47,11 +54,10 @@ export function Login() {
                         placeholder={"Digite seu CPF"}
                         value={cpfDoEleitor}
                         onChange={handleOnChangeCPF}
+                        max={11}
                     />
                     <MyButton value={"Entrar"} onClick={acessarUrna} />
-                    {erro && (
-                        <span id="erro">{erro}</span>
-                    )}
+                    {erro && <p id={"erro"}>{erro}</p>}
                 </div>
             </div>
         </div>
