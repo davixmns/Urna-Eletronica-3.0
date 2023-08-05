@@ -35,7 +35,7 @@ export function Login() {
     function acessarUrna() {
         const resposta = verifyLoginForm(nomeDoEleitor, cpfDoEleitor);
         if (resposta === true) {
-            navigate("/urna");
+            navigate(`/urna?nome=${encodeURIComponent(nomeDoEleitor)}&cpf=${encodeURIComponent(cpfDoEleitor)}`);
         }
     }
 

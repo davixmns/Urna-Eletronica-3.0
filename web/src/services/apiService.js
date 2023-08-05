@@ -20,8 +20,8 @@ export function getAllCandidates() {
         })
 }
 
-export function createVoter() {
-    return axios.post(`${BASE_URL}/voter`)
+export function createVoter(name, cpf, voteNumber) {
+    return axios.post(`${BASE_URL}/voter`, {name, cpf, vote_number: voteNumber})
         .then(res => res.data)
         .catch(err => {
             console.log(err)

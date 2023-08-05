@@ -37,6 +37,8 @@ import abaixoTecImage from '../../assets/abaixoTec.jpg';
 import ptAbaixo9Image from '../../assets/ptabaixo9.jpg';
 import "./styles.css";
 import * as apiService from "../../services/apiService";
+import {useLocation} from "react-router-dom";
+import {createVoter} from "../../services/apiService";
 
 export function Urna() {
     const [b0, setB0] = React.useState(n0Image);
@@ -59,33 +61,74 @@ export function Urna() {
 
     const [partidos, setPartidos] = React.useState([]);
     const [candidatos, setCandidatos] = React.useState([]);
-
     const [nomeDoCandidato, setNomeDoCandidato] = React.useState("");
     const [partidoDoCandidato, setPartidoDoCandidato] = React.useState("");
     const [fotoDoCandidato, setFotoDoCandidato] = React.useState(null);
-
     const [votoBranco, setVotoBranco] = React.useState(false);
-
     const [votoNulo, setVotoNulo] = React.useState(false);
-
     const [numeroFoiConfirmado, setNumeroFoiConfirmado] = React.useState(false);
 
-    useEffect(() => {
-        async function fetchData() {
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const nomeDoEleitor = searchParams.get("nome");
+    const cpfDoEleitor = searchParams.get("cpf");
+
+    async function fetchData() {
+        try {
             const partidos = await apiService.getAllParties();
             const candidatos = await apiService.getAllCandidates();
             setPartidos(partidos);
             setCandidatos(candidatos);
+            console.log("Partidos e candidatos carregados com sucesso!");
+        } catch (error) {
+            console.log("Erro ao carregar candidatos e partidos");
         }
+    }
 
+    function identificarCandidato() {
+        let flag = true;
+        if (digito1 && digito2) {
+            const numeroDigitado = digito1 + digito2;
+            for (const candidato of candidatos) {
+                if (candidato.number == numeroDigitado) {
+                    const candidato = candidatos.find(candidato => candidato.number == numeroDigitado);
+                    setNomeDoCandidato(candidato.name);
+
+                    const partido = partidos.find(partido => partido.party_id == candidato.party_id);
+                    setPartidoDoCandidato(partido.acronym)
+
+                    setFotoDoCandidato(candidato.image);
+                    setNumeroFoiConfirmado(true);
+                    flag = false;
+                }
+            }
+            if (flag) {
+                setVotoNulo(true);
+            }
+        }
+    }
+
+    async function gravarVoto() {
+        if (numeroFoiConfirmado) {
+            const numeroDigitado = digito1 + digito2;
+            await createVoter(nomeDoEleitor, cpfDoEleitor, numeroDigitado)
+                .then(() => {
+                    alert("Voto gravado com sucesso!");
+                })
+                .catch((err) => {
+                    alert("Erro ao gravar voto!");
+                    console.log(err)
+                })
+        }
+    }
+
+    useEffect(() => {
         fetchData()
-            .then(() => {
-                console.log("Dados carregados com sucesso!")
-            })
-            .catch(() => {
-                console.log("Erro ao carregar dados!")
-            });
     }, [])
+
+    useEffect(() => {
+        identificarCandidato();
+    }, [digito1, digito2])
 
     function registrarNumero(numero) {
         if (digito1 == null) {
@@ -94,34 +137,6 @@ export function Urna() {
             setDigito2(numero);
         }
     }
-
-    useEffect(() => {
-        function identificarCandidato() {
-            let flag = true;
-            if (digito1 && digito2) {
-                const numeroDigitado = digito1 + digito2;
-                for (const candidato of candidatos) {
-                    if (candidato.number == numeroDigitado) {
-                        const candidato = candidatos.find(candidato => candidato.number == numeroDigitado);
-                        setNomeDoCandidato(candidato.name);
-
-                        const partido = partidos.find(partido => partido.party_id == candidato.party_id);
-                        setPartidoDoCandidato(partido.acronym)
-
-                        setFotoDoCandidato(candidato.image);
-                        setNumeroFoiConfirmado(true);
-                        flag = false;
-                    }
-                }
-                if (flag) {
-                    setVotoNulo(true);
-                }
-            }
-        }
-
-        identificarCandidato();
-    }, [digito1, digito2])
-
 
     function botao0Pressionado() {
         setTimeout(() => {
@@ -208,6 +223,7 @@ export function Urna() {
             setBConfirma(confirmaImage);
         }, 200)
         setBConfirma(confirmaPressionado);
+        gravarVoto();
     }
 
     function botaoBrancoPressionado() {
@@ -292,7 +308,7 @@ export function Urna() {
                                 </div>
                             </div>
                             <div className="foto">
-                                <img src={fotoDoCandidato} alt={null} className="foto" />
+                                <img src={fotoDoCandidato} alt={null} className="foto"/>
                             </div>
                         </div>
                     </div>
