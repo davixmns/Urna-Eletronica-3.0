@@ -44,12 +44,21 @@
 }
 
 .voto-branco {
-    font-size: 3rem;
+    font-size: 6rem;
     position: absolute;
-    left: 3rem;
-    margin-top: 3rem;
-    font-weight: 300;
-    font-family: "Open Sans", serif;
+    left: 5rem;
+    margin-top: 6.5rem;
+    font-weight: lighter;
+    font-family: "Helvetica", sans-serif;
+}
+
+.fim {
+    font-size: 8rem;
+    position: absolute;
+    left: 10rem;
+    margin-top: 5.5rem;
+    font-weight: lighter;
+    font-family: "Helvetica", sans-serif;
 }
 
 .numero-errado {

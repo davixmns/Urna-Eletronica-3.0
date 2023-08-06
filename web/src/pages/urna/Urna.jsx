@@ -37,7 +37,7 @@ import abaixoTecImage from '../../assets/abaixoTec.jpg';
 import ptAbaixo9Image from '../../assets/ptabaixo9.jpg';
 import "./styles.css";
 import * as apiService from "../../services/apiService";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate, useNavigation} from "react-router-dom";
 import {createVoter} from "../../services/apiService";
 
 export function Urna() {
@@ -67,7 +67,8 @@ export function Urna() {
     const [votoBranco, setVotoBranco] = React.useState(false);
     const [votoNulo, setVotoNulo] = React.useState(false);
     const [numeroFoiConfirmado, setNumeroFoiConfirmado] = React.useState(false);
-
+    const [votoFoiGravado, setVotoFoiGravado] = React.useState(false);
+    const navigation = useNavigate()
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const nomeDoEleitor = searchParams.get("nome");
@@ -108,17 +109,30 @@ export function Urna() {
         }
     }
 
+    function goOut() {
+        setTimeout(() => {
+            navigation("/")
+        }, 2000)
+    }
+
     async function gravarVoto() {
+        if (votoBranco || votoNulo) {
+            alert("Voto gravado com sucesso")
+            return
+        }
         if (numeroFoiConfirmado) {
             const numeroDigitado = digito1 + digito2;
             await createVoter(nomeDoEleitor, cpfDoEleitor, numeroDigitado)
                 .then(() => {
-                    alert("Voto gravado com sucesso!");
+                    console.log("Voto gravado com sucesso")
+                    setVotoFoiGravado(true)
+                    goOut()
                 })
                 .catch((err) => {
-                    alert("Erro ao gravar voto!");
+                    alert(err.response.data.error)
                     console.log(err)
                 })
+
         }
     }
 
@@ -278,44 +292,47 @@ export function Urna() {
 
 
             <div id={"tela-div"}>
-                <h1 className={"titulo"}>Presidente</h1>
                 {!votoBranco ? (
-                    <div>
-                        <div className={"tela-dados"}>
-                            <div className={"textos"}>
-                                <div style={{gap: "2rem"}}>
-                                    <div className={"caixas"}>
-                                        <div>
-                                            <h3 className={"info-titulo"}>Numero:</h3>
+                    !votoFoiGravado ? (
+                        <div>
+                            <h1 className={"titulo"}>Presidente</h1>
+                            <div className={"tela-dados"}>
+                                <div className={"textos"}>
+                                    <div style={{gap: "2rem"}}>
+                                        <div className={"caixas"}>
+                                            <div>
+                                                <h3 className={"info-titulo"}>Numero:</h3>
+                                            </div>
+                                            <div className={"caixa-numero"}>
+                                                <h1 className={"numero"}>{digito1}</h1>
+                                            </div>
+                                            <div className={"caixa-numero"}>
+                                                <h1 className={"numero"}>{digito2}</h1>
+                                            </div>
                                         </div>
-                                        <div className={"caixa-numero"}>
-                                            <h1 className={"numero"}>{digito1}</h1>
-                                        </div>
-                                        <div className={"caixa-numero"}>
-                                            <h1 className={"numero"}>{digito2}</h1>
-                                        </div>
-                                    </div>
 
-                                    <div>
                                         <div>
-                                            <h3 className={"info-titulo"}>Nome: {nomeDoCandidato}</h3>
+                                            <div>
+                                                <h3 className={"info-titulo"}>Nome: {nomeDoCandidato}</h3>
+                                            </div>
+                                            <div style={{marginTop: "3rem"}}>
+                                                <h3 className={"info-titulo"}>Partido: {partidoDoCandidato}</h3>
+                                            </div>
                                         </div>
-                                        <div style={{marginTop: "3rem"}}>
-                                            <h3 className={"info-titulo"}>Partido: {partidoDoCandidato}</h3>
-                                        </div>
-                                    </div>
 
+                                    </div>
+                                </div>
+                                <div className="foto">
+                                    <img src={fotoDoCandidato} alt={null} className="foto"/>
                                 </div>
                             </div>
-                            <div className="foto">
-                                <img src={fotoDoCandidato} alt={null} className="foto"/>
-                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <h1 className={"fim"}>FIM</h1>
+                    )
                 ) : (
-                    <h1 className={"voto-branco"}>VOTO EM BRANCO</h1>
+                    <h1 className={"voto-branco"}>BRANCO</h1>
                 )}
-
             </div>
         </div>
 

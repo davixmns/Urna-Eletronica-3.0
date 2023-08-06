@@ -1,17 +1,40 @@
 #my-button {
-    background-color: gray;
-    border: none;
-    border-radius: 4px;
+    display: inline-block;
     color: #fff;
-    cursor: pointer;
-    font-size: 16px;
-    height: 40px;
-    width: 20rem;
-    margin-top: 2.4rem;
-    transition: background-color 0.5s;
     font-weight: bold;
+    background-color: #538fbe;
+    padding: 9px 122px;
+    font-size: 24px;
+    border: 1px solid #2d6898;
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0, rgb(73,132,180)),
+            color-stop(1, rgb(97,155,203))
+    );
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-top: 1.8rem;
 }
 
 #my-button:hover {
-    background-color: dodgerblue;
+    cursor: pointer;
+}
+
+#my-button:active {
+    background-image: linear-gradient(bottom, rgb(88,154,204) 0%, rgb(90,150,199) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(88,154,204) 0%, rgb(90,150,199) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(88,154,204) 0%, rgb(90,150,199) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(88,154,204) 0%, rgb(90,150,199) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(88,154,204) 0%, rgb(90,150,199) 100%);
+
+    background-image: -webkit-gradient(
+            linear,
+            left bottom,
+            left top,
+            color-stop(0, rgb(88,154,204)),
+            color-stop(1, rgb(90,150,199))
+    );
 }

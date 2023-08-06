@@ -21,11 +21,10 @@ export function getAllCandidates() {
 }
 
 export function createVoter(name, cpf, voteNumber) {
-    return axios.post(`${BASE_URL}/voter`, {name, cpf, vote_number: voteNumber})
-        .then(res => res.data)
-        .catch(err => {
-            console.log(err)
-            return null
-        })
+    try {
+        return axios.post(`${BASE_URL}/voter`, {name, cpf, vote_number: voteNumber})
+    } catch (e) {
+        return e
+    }
 }
 
