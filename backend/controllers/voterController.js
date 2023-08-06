@@ -3,6 +3,15 @@ const bcrypt = require('bcryptjs')
 const CandidateModel = require('../models/CandidateModel')
 
 module.exports = {
+    async getVoterByCpf(req, res) {
+        const {cpf} = req.params
+        const voter = await VoterModel.findOne({where: {cpf: cpf}})
+        if (!voter) {
+            return res.status(200).json({message: "Eleitor não encontrado"})
+        }
+        return res.status(401).json({error: "CPF já cadastrado"})
+    },
+
     async getAllVoters(req, res) {
         const voters = await VoterModel.findAll()
         return res.status(200).json(voters)

@@ -28,3 +28,11 @@ export function createVoter(name, cpf, voteNumber) {
     }
 }
 
+export function getVoterByCpf(cpf) {
+    try {
+        return axios.get(`${BASE_URL}/voter/${cpf}`)
+    } catch (e) {
+        return e
+    }
+}
+
