@@ -20,7 +20,7 @@ const parties = [
 const candidates = [
     {name: 'Ciro Ferreira Gomes', number: 12, party_id: 1, image: fotoCiro},
     {name: 'Felipe Davila', number: 30, party_id: 2, image: fotoDavila},
-    {name: 'Jair Messias Bolsonaro', number: 17, party_id: 3, image: fotoBolsonaro},
+    {name: 'Jair Messias Bolsonaro', number: 22, party_id: 3, image: fotoBolsonaro},
     {name: 'Luís Inácio Lula da Silva', number: 13, party_id: 4, image: fotoLula},
     {name: 'Padre Kelmon', number: 14, party_id: 5, image: fotoKelmon},
     {name: 'Simone Tebet', number: 15, party_id: 6, image: fotoSimone},

@@ -13,7 +13,6 @@ import n6Image from '../../assets/n6.jpg';
 import n7Image from '../../assets/n7.jpg';
 import n8Image from '../../assets/n8.jpg';
 import n9Image from '../../assets/n9.jpg';
-
 import n0Normal from '../../assets/n0_down.jpg';
 import n1Normal from '../../assets/n1_down.jpg';
 import n2Normal from '../../assets/n2_down.jpg';
@@ -27,7 +26,6 @@ import n9Normal from '../../assets/n9_down.jpg';
 import confirmaPressionado from '../../assets/confirma_down.jpg';
 import brancoPressionado from '../../assets/branco_down.jpg';
 import corrigePressionado from '../../assets/corrige_down.jpg';
-
 import ladoDirTecImage from '../../assets/ladoDirTec.jpg';
 import ptabaixo7Image from '../../assets/ptabaixo7.jpg';
 import confirmaImage from '../../assets/confirma.jpg';
@@ -37,8 +35,9 @@ import abaixoTecImage from '../../assets/abaixoTec.jpg';
 import ptAbaixo9Image from '../../assets/ptabaixo9.jpg';
 import "./styles.css";
 import * as apiService from "../../services/apiService";
-import {useLocation, useNavigate, useNavigation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {createVoter} from "../../services/apiService";
+import gifLibras from '../../assets/presidente.gif';
 
 export function Urna() {
     const [b0, setB0] = React.useState(n0Image);
@@ -265,6 +264,16 @@ export function Urna() {
 
     return (
         <div>
+            <div className={"info"}>
+                <ul>
+                    <h1>Candidatos</h1>
+                    {candidatos.map(candidato => (
+                        <li style={{ textAlign: "start" }} key={candidato.candidate_id}>
+                            <h2>{candidato.number + " - " + candidato.name}</h2>
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <img id="tela" alt="tela" src={telaImage} width="451" height="423" border="0"/>
             <img id="topo" alt="topo" src={topoImage} width="192" height="183" border="0"/>
             <img id="faixaDir" alt="faixaDir" src={faixaDirImage} width="38" height="357" border="0"/>
@@ -289,7 +298,6 @@ export function Urna() {
             <img id="ptabaixo7" alt="ptabaixo7" src={ptabaixo7Image} width="51" height="36" border="0"/>
             <img id="ptabaixo9" alt="ptabaixo9" src={ptAbaixo9Image} width="40" height="28" border="0"/>
             <img id="abaixoTec" alt="abaixoTec" src={abaixoTecImage} width="226" height="27" border="0"/>
-
 
             <div id={"tela-div"}>
                 {!votoBranco ? (
@@ -333,6 +341,7 @@ export function Urna() {
                 ) : (
                     <h1 className={"voto-branco"}>BRANCO</h1>
                 )}
+                {numeroFoiConfirmado ? null : <img src={gifLibras} alt="GIF Libras" className={"gif-libras"}/>}
             </div>
         </div>
 

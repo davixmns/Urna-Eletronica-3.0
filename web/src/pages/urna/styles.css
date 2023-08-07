@@ -296,6 +296,20 @@
     height: 20px;
 }
 
+.gif-libras {
+    top: 75px;
+    width: 200px;
+    position: absolute;
+    right: 3rem
+}
+
+.info {
+    position: absolute;
+    right: 0;
+    margin-right: 9rem;
+    margin-top: 15rem;
+}
+
 
 
 
