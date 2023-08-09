@@ -52,6 +52,15 @@
     font-family: "Helvetica", sans-serif;
 }
 
+.voto-nulo {
+    font-size: 4rem;
+    position: absolute;
+    left: 5rem;
+    margin-top: 8rem;
+    font-weight: lighter;
+    font-family: "Helvetica", sans-serif;
+}
+
 .fim {
     font-size: 8rem;
     position: absolute;

@@ -302,6 +302,7 @@ export function Urna() {
             <div id={"tela-div"}>
                 {!votoBranco ? (
                     !votoFoiGravado ? (
+                        !votoNulo ? (
                         <div>
                             <h1 className={"titulo"}>Presidente</h1>
                             <div className={"tela-dados"}>
@@ -335,13 +336,16 @@ export function Urna() {
                                 </div>
                             </div>
                         </div>
+                        ) : (
+                            <h1 className={"voto-nulo"}>VOTO NULO</h1>
+                        )
                     ) : (
                         <h1 className={"fim"}>FIM</h1>
                     )
                 ) : (
                     <h1 className={"voto-branco"}>BRANCO</h1>
                 )}
-                {numeroFoiConfirmado ? null : <img src={gifLibras} alt="GIF Libras" className={"gif-libras"}/>}
+                {numeroFoiConfirmado || votoBranco || votoNulo ? null : <img src={gifLibras} alt="GIF Libras" className={"gif-libras"}/>}
             </div>
         </div>
 
