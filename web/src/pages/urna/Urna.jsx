@@ -344,7 +344,7 @@ export function Urna() {
                                         </div>
                                     </div>
                                     <div className="foto">
-                                        <img src={fotoDoCandidato} alt={null} className="foto"/>
+                                        <img src={fotoDoCandidato} alt={null} className="foto" />
                                     </div>
                                 </div>
                             </div>
