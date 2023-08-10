@@ -38,6 +38,10 @@ import * as apiService from "../../services/apiService";
 import {useLocation, useNavigate} from "react-router-dom";
 import {createVoter} from "../../services/apiService";
 import gifLibras from '../../assets/presidente.gif';
+import audioConfirma from '../../assets/inter.mp3';
+import audioFim from '../../assets/fim.mp3';
+import audioCorrige from '../../assets/ops.mp3';
+import {MyLoading} from "../../components/myLoading/MyLoading";
 
 export function Urna() {
     const [b0, setB0] = React.useState(n0Image);
@@ -50,14 +54,11 @@ export function Urna() {
     const [b7, setB7] = React.useState(n7Image);
     const [b8, setB8] = React.useState(n8Image);
     const [b9, setB9] = React.useState(n9Image);
-
     const [bConfirma, setBConfirma] = React.useState(confirmaImage);
     const [bBranco, setBBranco] = React.useState(brancoImage);
     const [bCorrige, setBCorrige] = React.useState(corrigeImage);
-
     const [digito1, setDigito1] = React.useState(null);
     const [digito2, setDigito2] = React.useState(null);
-
     const [partidos, setPartidos] = React.useState([]);
     const [candidatos, setCandidatos] = React.useState([]);
     const [nomeDoCandidato, setNomeDoCandidato] = React.useState("");
@@ -72,6 +73,10 @@ export function Urna() {
     const searchParams = new URLSearchParams(location.search);
     const nomeDoEleitor = searchParams.get("nome");
     const cpfDoEleitor = searchParams.get("cpf");
+    const somConfirma = new Audio(audioConfirma);
+    const somFim = new Audio(audioFim);
+    const somCorrige = new Audio(audioCorrige);
+    const [loading, setLoading] = React.useState(false);
 
     async function fetchData() {
         try {
@@ -111,28 +116,7 @@ export function Urna() {
     function goOut() {
         setTimeout(() => {
             navigation("/")
-        }, 2000)
-    }
-
-    async function gravarVoto() {
-        if (votoBranco || votoNulo) {
-            alert("Voto gravado com sucesso")
-            return
-        }
-        if (numeroFoiConfirmado) {
-            const numeroDigitado = digito1 + digito2;
-            await createVoter(nomeDoEleitor, cpfDoEleitor, numeroDigitado)
-                .then(() => {
-                    console.log("Voto gravado com sucesso")
-                    setVotoFoiGravado(true)
-                    goOut()
-                })
-                .catch((err) => {
-                    alert(err.response.data.error)
-                    console.log(err)
-                })
-
-        }
+        }, 4000)
     }
 
     useEffect(() => {
@@ -231,11 +215,38 @@ export function Urna() {
         registrarNumero("9")
     }
 
+    async function gravarVoto() {
+        if (votoBranco || votoNulo) {
+            setVotoFoiGravado(true)
+            await somFim.play()
+            goOut()
+            return
+        }
+        if (numeroFoiConfirmado) {
+            const numeroDigitado = digito1 + digito2;
+            await createVoter(nomeDoEleitor, cpfDoEleitor, numeroDigitado)
+                .then(() => {
+                    console.log("Voto gravado com sucesso")
+                    setVotoFoiGravado(true)
+                    somFim.play()
+                    goOut()
+                })
+                .catch((err) => {
+                    alert(err.response.data.error)
+                    console.log(err)
+                })
+        }
+    }
+
     function botaoConfirmaPressionado() {
+        somConfirma.play();
         setTimeout(() => {
             setBConfirma(confirmaImage);
         }, 200)
         setBConfirma(confirmaPressionado);
+        if (votoBranco) {
+            setVotoBranco(false)
+        }
         gravarVoto();
     }
 
@@ -248,6 +259,7 @@ export function Urna() {
     }
 
     function botaoCorrigePressionado() {
+        somCorrige.play();
         setTimeout(() => {
             setBCorrige(corrigeImage);
         }, 200)
@@ -268,7 +280,7 @@ export function Urna() {
                 <ul>
                     <h1>Candidatos</h1>
                     {candidatos.map(candidato => (
-                        <li style={{ textAlign: "start" }} key={candidato.candidate_id}>
+                        <li style={{textAlign: "start"}} key={candidato.candidate_id}>
                             <h2>{candidato.number + " - " + candidato.name}</h2>
                         </li>
                     ))}
@@ -303,39 +315,39 @@ export function Urna() {
                 {!votoBranco ? (
                     !votoFoiGravado ? (
                         !votoNulo ? (
-                        <div>
-                            <h1 className={"titulo"}>Presidente</h1>
-                            <div className={"tela-dados"}>
-                                <div className={"textos"}>
-                                    <div style={{gap: "2rem"}}>
-                                        <div className={"caixas"}>
-                                            <div>
-                                                <h3 className={"info-titulo"}>Numero:</h3>
+                            <div>
+                                <h1 className={"titulo"}>Presidente</h1>
+                                <div className={"tela-dados"}>
+                                    <div className={"textos"}>
+                                        <div style={{gap: "2rem"}}>
+                                            <div className={"caixas"}>
+                                                <div>
+                                                    <h3 className={"info-titulo"}>Numero:</h3>
+                                                </div>
+                                                <div className={"caixa-numero"}>
+                                                    <h1 className={"numero"}>{digito1}</h1>
+                                                </div>
+                                                <div className={"caixa-numero"}>
+                                                    <h1 className={"numero"}>{digito2}</h1>
+                                                </div>
                                             </div>
-                                            <div className={"caixa-numero"}>
-                                                <h1 className={"numero"}>{digito1}</h1>
-                                            </div>
-                                            <div className={"caixa-numero"}>
-                                                <h1 className={"numero"}>{digito2}</h1>
-                                            </div>
-                                        </div>
 
-                                        <div>
                                             <div>
-                                                <h3 className={"info-titulo"}>Nome: {nomeDoCandidato}</h3>
+                                                <div>
+                                                    <h3 className={"info-titulo"}>Nome: {nomeDoCandidato}</h3>
+                                                </div>
+                                                <div style={{marginTop: "3rem"}}>
+                                                    <h3 className={"info-titulo"}>Partido: {partidoDoCandidato}</h3>
+                                                </div>
                                             </div>
-                                            <div style={{marginTop: "3rem"}}>
-                                                <h3 className={"info-titulo"}>Partido: {partidoDoCandidato}</h3>
-                                            </div>
-                                        </div>
 
+                                        </div>
+                                    </div>
+                                    <div className="foto">
+                                        <img src={fotoDoCandidato} alt={null} className="foto"/>
                                     </div>
                                 </div>
-                                <div className="foto">
-                                    <img src={fotoDoCandidato} alt={null} className="foto"/>
-                                </div>
                             </div>
-                        </div>
                         ) : (
                             <h1 className={"voto-nulo"}>VOTO NULO</h1>
                         )
@@ -345,7 +357,8 @@ export function Urna() {
                 ) : (
                     <h1 className={"voto-branco"}>BRANCO</h1>
                 )}
-                {numeroFoiConfirmado || votoBranco || votoNulo ? null : <img src={gifLibras} alt="GIF Libras" className={"gif-libras"}/>}
+                {votoFoiGravado || votoBranco || numeroFoiConfirmado || votoNulo ? null :
+                    <img src={gifLibras} alt="GIF Libras" className={"gif-libras"}/>}
             </div>
         </div>
 
