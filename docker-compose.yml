@@ -1,0 +1,45 @@
+version: "3.7"
+
+services:
+  db:
+    image: mysql
+    container_name: election-db
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: election
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+        - ./volumes/db:/var/lib/mysql
+    restart: on-failure
+    networks:
+      - election-network
+
+  api:
+    build: ./backend
+    container_name: election-api
+    restart: on-failure
+    volumes:
+      - ./volumes/api:/home/node/app
+    ports:
+      - "3000:3000"
+    depends_on:
+        - db
+    networks:
+        - election-network
+
+  web:
+    container_name: election-web
+    build: ./web
+    ports:
+      - "3001:3000"
+    depends_on:
+      - api
+    networks:
+      - election-network
+
+networks:
+  election-network:
+    name: election-network
+    driver: bridge
+    external: false

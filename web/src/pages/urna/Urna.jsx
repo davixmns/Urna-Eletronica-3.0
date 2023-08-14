@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import telaImage from '../../assets/tela.jpg';
 import topoImage from '../../assets/topo.jpg';
 import faixaDirImage from '../../assets/faixaDir.jpg';
@@ -40,34 +40,32 @@ import {createVoter} from "../../services/apiService";
 import gifLibras from '../../assets/presidente.gif';
 import audioConfirma from '../../assets/inter.mp3';
 import audioFim from '../../assets/fim.mp3';
-import audioCorrige from '../../assets/ops.mp3';
-import {MyLoading} from "../../components/myLoading/MyLoading";
 
 export function Urna() {
-    const [b0, setB0] = React.useState(n0Image);
-    const [b1, setB1] = React.useState(n1Image);
-    const [b2, setB2] = React.useState(n2Image);
-    const [b3, setB3] = React.useState(n3Image);
-    const [b4, setB4] = React.useState(n4Image);
-    const [b5, setB5] = React.useState(n5Image);
-    const [b6, setB6] = React.useState(n6Image);
-    const [b7, setB7] = React.useState(n7Image);
-    const [b8, setB8] = React.useState(n8Image);
-    const [b9, setB9] = React.useState(n9Image);
-    const [bConfirma, setBConfirma] = React.useState(confirmaImage);
-    const [bBranco, setBBranco] = React.useState(brancoImage);
-    const [bCorrige, setBCorrige] = React.useState(corrigeImage);
-    const [digito1, setDigito1] = React.useState(null);
-    const [digito2, setDigito2] = React.useState(null);
-    const [partidos, setPartidos] = React.useState([]);
-    const [candidatos, setCandidatos] = React.useState([]);
-    const [nomeDoCandidato, setNomeDoCandidato] = React.useState("");
-    const [partidoDoCandidato, setPartidoDoCandidato] = React.useState("");
-    const [fotoDoCandidato, setFotoDoCandidato] = React.useState(null);
-    const [votoBranco, setVotoBranco] = React.useState(false);
-    const [votoNulo, setVotoNulo] = React.useState(false);
-    const [numeroFoiConfirmado, setNumeroFoiConfirmado] = React.useState(false);
-    const [votoFoiGravado, setVotoFoiGravado] = React.useState(false);
+    const [b0, setB0] = useState(n0Image);
+    const [b1, setB1] = useState(n1Image);
+    const [b2, setB2] = useState(n2Image);
+    const [b3, setB3] = useState(n3Image);
+    const [b4, setB4] = useState(n4Image);
+    const [b5, setB5] = useState(n5Image);
+    const [b6, setB6] = useState(n6Image);
+    const [b7, setB7] = useState(n7Image);
+    const [b8, setB8] = useState(n8Image);
+    const [b9, setB9] = useState(n9Image);
+    const [bConfirma, setBConfirma] = useState(confirmaImage);
+    const [bBranco, setBBranco] = useState(brancoImage);
+    const [bCorrige, setBCorrige] = useState(corrigeImage);
+    const [digito1, setDigito1] = useState(null);
+    const [digito2, setDigito2] = useState(null);
+    const [partidos, setPartidos] = useState([]);
+    const [candidatos, setCandidatos] = useState([]);
+    const [nomeDoCandidato, setNomeDoCandidato] = useState("");
+    const [partidoDoCandidato, setPartidoDoCandidato] = useState("");
+    const [fotoDoCandidato, setFotoDoCandidato] = useState(null);
+    const [votoBranco, setVotoBranco] = useState(false);
+    const [votoNulo, setVotoNulo] = useState(false);
+    const [numeroFoiConfirmado, setNumeroFoiConfirmado] = useState(false);
+    const [votoFoiGravado, setVotoFoiGravado] = useState(false);
     const navigation = useNavigate()
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
@@ -75,8 +73,6 @@ export function Urna() {
     const cpfDoEleitor = searchParams.get("cpf");
     const somConfirma = new Audio(audioConfirma);
     const somFim = new Audio(audioFim);
-    const somCorrige = new Audio(audioCorrige);
-    const [loading, setLoading] = React.useState(false);
 
     async function fetchData() {
         try {
@@ -259,7 +255,7 @@ export function Urna() {
     }
 
     function botaoCorrigePressionado() {
-        somCorrige.play();
+        // somCorrige.play();
         setTimeout(() => {
             setBCorrige(corrigeImage);
         }, 200)
