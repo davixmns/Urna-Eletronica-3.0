@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import "./styles.css";
 import {MyButton} from "../../components/myButton/MyButton";
 import {MyTextInput} from "../../components/myTextInput/MyTextInput";
@@ -37,18 +37,14 @@ export function Login() {
 
     async function acessarUrna() {
         const res = verifyLoginForm(nomeDoEleitor, cpfDoEleitor);
-        if (res !== true) {
-            return
-        }
-        try {
-            await getVoterByCpf(cpfDoEleitor)
-        } catch (error) {
-            await erroAudio.play();
+        if (res !== true) return
+        await getVoterByCpf(cpfDoEleitor).then(async () => {
+            await confirmaAudio.play();
+            navigate(`/urna?nome=${encodeURIComponent(nomeDoEleitor)}&cpf=${encodeURIComponent(cpfDoEleitor)}`);
+        }).catch((error) => {
+            erroAudio.play();
             alert(error.response.data.error)
-            return
-        }
-        await confirmaAudio.play();
-        navigate(`/urna?nome=${encodeURIComponent(nomeDoEleitor)}&cpf=${encodeURIComponent(cpfDoEleitor)}`);
+        })
     }
 
     return (

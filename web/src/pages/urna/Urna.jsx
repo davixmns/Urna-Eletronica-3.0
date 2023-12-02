@@ -78,8 +78,8 @@ export function Urna() {
         try {
             const partidos = await apiService.getAllParties();
             const candidatos = await apiService.getAllCandidates();
-            setPartidos(partidos);
-            setCandidatos(candidatos);
+            setPartidos(partidos.data);
+            setCandidatos(candidatos.data);
             console.log("Partidos e candidatos carregados com sucesso!");
         } catch (error) {
             console.log("Erro ao carregar candidatos e partidos");
